@@ -1,0 +1,53 @@
+\documentclass[11pt, a4paper, chapterprefix=false]{scrreprt}
+
+\usepackage{palatino, url}
+\usepackage[ngermanb]{babel}
+\usepackage[utf8]{inputenc}
+\setlength{\parindent}{0cm}
+
+\usepackage{amsfonts}	% für mathematische Symbole wie Menge der nat. Zahlen
+\usepackage{amsmath}
+%\usepackage{textcomp}	% für \textmu also das Mü- bzw. Mikro-Symbol
+%\usepackage{makeidx}	% für ein "schöneres" Stichwortverzeichnis
+%\makeindex				% erzeugt das Stichwortvereichnis, blendet es jedoch nicht hier ein. Dafür am Ende den entspr. Code verwenden.
+
+\bibliographystyle{plain}
+
+\begin{document}
+	
+	%Teteldeklaration und Erstellung
+	\begin{titlepage}
+	\author{Dipl. -Met K L \\ 5xxxxxx} 
+	\title{Seminar 01909\\ Maßnahmen zur Absicherung von privaten und kleinen und Unternehmensnetzwerken: \\ Virtuelle private Netzwerke und virtuelle LANs } 
+	\date{Wintersemester 2018/19} 
+	\maketitle
+	\end{titlepage}
+	\newpage 
+	\thispagestyle{empty}
+	\quad 
+	\newpage
+	
+	%Inhaltsverzeichnis
+	
+	\tableofcontents
+	
+	%Kapitel
+	\setcounter{page}{1}
+	
+	\include{Einleitung}
+	
+	\include{SecNet}
+	
+	\include{Vlan}
+	
+	\include{VPN}
+	
+	\include{ZusAus}
+	
+
+	\nocite{*} % dient der Übersicht, sollte vor Abgabe entfernt werden
+	\bibliography{it.bib}
+
+\end{document}
+
+
