@@ -13,7 +13,11 @@ Abbildung \ref{grundarch} zeigt diesen Aufbau. Das \emph{Local Area Network} (\e
 	\label{grundarch}
 \end{figure}
 
-Die zwiete Zone, das Sicherheitsgateway, trennt die InternetAnbindung vom internen Firmennetz. Hier wird eine P-A-P Struktur empfohlen, bestehend aus einem Paketfilter auf der Seite des lokalen Netzes, sowie einem Paketfilter auf Seite des Internets, die jeweils die Kommunikation auf der dritten Schicht des Protokollstapel, der Vermittlungsschicht oder auch IP-Schicht, filtern. Der Paketfilter auf Seiten des LANs untersucht die nach außen gerichteten Pakete, der Paketfilter auf Seiten der Internetanbindung filtert die ankommenden IP-Pakete.
+
+Die zweite Zone, das Sicherheitsgateway, trennt die InternetAnbindung vom internen Firmennetz. Hier wird eine P-A-P Struktur empfohlen, bestehend aus einem Paketfilter auf der Seite des lokalen Netzes, sowie einem Paketfilter auf Seite des Internets, die jeweils die Kommunikation auf der dritten Schicht des Protokollstapel (\ref{A1}), der Vermittlungsschicht oder auch IP-Schicht, filter. Untersucht werden die Headerinformationen der Vermittlungs- und der Transportschicht und die Datenpakete auf dieser Grundlage entweder verworfen oder durchgelassen  \cite{isi-lana}.
+ Der Paketfilter auf Seiten des LANs untersucht die nach auÃen gerichteten Pakete, der Paketfilter auf Seiten der Internetanbindung filtert die aus dem WWW ankommenden IP-Pakete. Zwischen den Paketfiltern wird das \emph{Application-Level-Gateway} angeschlossen. Hierbei handelt es sich um einen Proxy-Server Über den alle Anfragen in das und aus dem Internet laufen. Er tritt als Stelvertreter auf und verschleiert so die Identitäten der  Clients im LAN \cite{zisler2018computer}, seine Aufgabe ist es außerdem die Kommunikation auf Anwendungsebene zu durchleuchten. Er agiert also auf einer höhreren Schicht als die Paketfilter. 
+ Der Bereich zwischen den beiden Paketfiltern des Sicherheits-Gateways nennt sich \emph{Demilitarisierte Zone (DMZ)}, hier sollten Dienste untergebracht werden die vom Internet aus erreichbar sein müssen, wie zum Beispiel Web-Server des Unternehmens. 
+ 
 
 \begin{figure}
 	\includegraphics[width=\linewidth]{klUnternHoch.jpeg}
