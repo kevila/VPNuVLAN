@@ -9,17 +9,20 @@ Die Technologie, die dies ermöglichen soll ist \emph{VPN}. Ein VPN ist ein virt
   \item Extranet VPN: gewährt einem Geschäftspartner/Kunden/Lieferanten Zugang zu Teilen des Internen Netzes 
 \end{itemize}
 
-Die Umsetzung des VPN kann entweder bei einem Dienstleister eingekauft werden, dies nennt sich \emph{Trusted VPN}, oder selber als \emph{secure VPN} aufgebaut werden. Fällt die wahr auf ein Trusted VPN ist sicherzustellen, dass die Daten tatsächlich verschlüsselt übertragen werden, da nicht alle angebotenen Dienstleistungen, die sich als VPN bezeichnen den Datenverkehr verschlüsseln. 
+Die Umsetzung des VPN kann entweder bei einem Dienstleister eingekauft werden, dies nennt sich \emph{Trusted VPN}, oder selber als \emph{secure VPN} aufgebaut werden. Beim Einsatz von Trusted VPN sollten vertrauliche Daten zusätzlich auf Anwendungsebene verschlüsselt werden, um sie zum Beispiel vor Innentätern des Dienstleisters zu schützen. 
+ Es gibt außerdem Zwischenformen, so dass nur Teile der Technologie bei einem Dienstleister eingekauft werden.
 
 
 \section{Funktionsweise}
 
-Das VPN-Gateway kann an verschieden Stellen an das Netzwerk angeschlossen werden. Zu beachten ist
+Die Basistechnologie die einem VPN zugrundeliegt ist das \emph{Tunneling}. Es handelt sich um ein Verfahren, welches  Netzwerkprotokolle in beliebige andere Netzwerkprotokolle kapselt. 
 
 
 
 
 \section{Architektur}
+Das VPN-Gateway kann an verschieden Stellen an das Netzwerk angeschlossen werden. Zu beachten ist
+
 \includegraphics[width=\linewidth]{vpnarchitektur.jpeg}
 
 \section{Anwendungsbereiche in privaten Haushalten}
