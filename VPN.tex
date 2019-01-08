@@ -15,19 +15,39 @@ Die Umsetzung des VPN kann entweder bei einem Dienstleister eingekauft werden, d
 
 \section{Funktionsweise}
 
-Die Basistechnologie die einem VPN zugrundeliegt ist das \emph{Tunneling}. Es handelt sich um ein Verfahren, welches  Netzwerkprotokolle in beliebige andere Netzwerkprotokolle kapselt. 
+Die Basistechnologie die einem VPN zugrunde liegt ist das \emph{Tunneling}. Es handelt sich um ein Verfahren, welches  Netzwerkprotokolle in beliebige andere Netzwerkprotokolle kapselt (\emph{encapsulation}), über ein Netzwerk verschickt und an einem gegebenen Endpunkt wieder auspackt (\emph{decapsulation}). Das Tunneling kann auf verschiedenen Schichten des Protokollstapels (vergl. Anhang \ref{A1}) ansetzten. Das Prinzip des Tunneling ist in Abbildung \ref{tunnel} dargestellt. Während der Übertragung durch das Internet ist für die Weiterleitung der Datenpakete nicht relevant, dass es sich um Pakete eines virtuellen Netzwerks handelt, hier werden nur die Header X und Y ausgewertet. Die Header A und B sind für den Transport außerhalb der Endpunkte des VPNs zu verwenden. Der Header de Tunneling-Protokolls gibt dem Empfänger am Endpunkt des Tunnels Informationen darüber, wie das Paket weiterzuleiten ist. 
 
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{tunneling}
+	\caption{Grundprinzip des Tunneling}
+	\label{tunnel}
+\end{figure}
 
+ Im Folgenden sollen die wichtigsten standardisierten  Tunneling Protokolle zur VPN-Realisierung vorgestellt werden
 
+\subsection{Layer-2-Protokolle}
 
+\subsubsection{Layer 2 Tunneling Protocol (L2TP)}
+Das L2TP ist der Nachfolger der Tunneling Protokolle PPTP (Point-to-Poit-Tunneling-Protokol) und L2F (Layer-two-Forwarding) \cite{isi-vpn}. Es kapselt Daten in PPP (Point-to-Point-Protocol \footnote{spezifiziert in RFC 1661: https://www.rfc-editor.org/rfc/rfc1661.txt}) Rahmen, ein Ende-zu-Ende Protokoll auf der Vermittlungsschicht, somit ist es möglich auch nicht-IP Pakete über das Internet zu transportieren \cite{gokulakrishnan2014survey}. Zur Authentisierung dienen die Protokolle EAP (Extensible Authentication Protocol) und CHAP (Challenge Handshake Protocol).
+Da weder L2TP noch PPP die Vertraulichkeit der Daten gewähren, muss die Kommunikation zusätzlich mit IPSec (siehe Abschnitt \ref{subsub:L3}) abgesichert werden.   
+
+\subsection{Layer-3-Protokolle}
+\subsubsection{IPSec}
+\label{subsub:L3}
 \section{Architektur}
 Das VPN-Gateway kann an verschieden Stellen an das Netzwerk angeschlossen werden. Zu beachten ist
 
-\includegraphics[width=\linewidth]{vpnarchitektur.jpeg}
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{vpnarchitektur.jpeg}
+	\caption{Sichere Einbindung eines VPN-Gateways in eine P-A-P Struktur}
+	\label{vpnarch}
+\end{figure}
+
+
 
 \section{Anwendungsbereiche in privaten Haushalten}
 
-Virtuelle private Netzwerke werden auch im privaten Bereich  verwendet. Hier gibt es hauptsächlich zwei Anwendungsszenarien: der Zugriff aus der Ferne auf das Heimnetzwerk zur Bedienung des IoT (Internet of Things) oder der Zugriff auf die NAS als Cloud-Alternaive oder
+Virtuelle private Netzwerke werden auch im privaten Bereich  verwendet. Hier gibt es hauptsächlich zwei Anwendungsszenarien: der Zugriff aus der Ferne auf das Heimnetzwerk zur Bedienung des IoT (Internet of Things) oder der Zugriff auf die NAS als Cloud-Alternative oder
 
 
 
