@@ -26,14 +26,41 @@ Die Basistechnologie die einem VPN zugrunde liegt ist das \emph{Tunneling}. Es h
  Im Folgenden sollen die wichtigsten standardisierten  Tunneling Protokolle zur VPN-Realisierung vorgestellt werden
 
 \subsection{Layer-2-Protokolle}
+Tunneling Protokolle die auf der Sicherungsschicht arbeiten....
+
 
 \subsubsection{Layer 2 Tunneling Protocol (L2TP)}
-Das L2TP ist der Nachfolger der Tunneling Protokolle PPTP (Point-to-Poit-Tunneling-Protokol) und L2F (Layer-two-Forwarding) \cite{isi-vpn}. Es kapselt Daten in PPP (Point-to-Point-Protocol \footnote{spezifiziert in RFC 1661: https://www.rfc-editor.org/rfc/rfc1661.txt}) Rahmen, ein Ende-zu-Ende Protokoll auf der Vermittlungsschicht, somit ist es möglich auch nicht-IP Pakete über das Internet zu transportieren \cite{gokulakrishnan2014survey}. Zur Authentisierung dienen die Protokolle EAP (Extensible Authentication Protocol) und CHAP (Challenge Handshake Protocol).
-Da weder L2TP noch PPP die Vertraulichkeit der Daten gewähren, muss die Kommunikation zusätzlich mit IPSec (siehe Abschnitt \ref{subsub:L3}) abgesichert werden.   
+Das L2TP ist der Nachfolger der Tunneling Protokolle PPTP (Point-to-Poit-Tunneling-Protokol) und L2F (Layer-two-Forwarding) \cite{isi-vpn}. Es kapselt Daten in PPP (Point-to-Point-Protocol \footnote{spezifiziert in RFC 1661: https://www.rfc-editor.org/rfc/rfc1661.txt}) Rahmen, ein Ende-zu-Ende Protokoll auf der Vermittlungsschicht, somit ist es möglich auch nicht-IP Pakete über das Internet zu transportieren \cite{gokulakrishnan2014survey}. Zur Authentisierung dienen die Protokolle EAP (Extensible Authentication Protocol) und CHAP (Challenge Handshake Protocol). Wobei CHAP nach \cite{eckert2018sicherheit}
+Es können mehrere Verbindungen über einen einzigen L2TP Tunnel laufen, auch alle Management und Wartungsinformationen werden über diesen einen Tunnel ausgetauscht \cite{bohmer2005vpn}.
+Da weder L2TP noch PPP die Vertraulichkeit der Daten gewähren, muss die Kommunikation zusätzlich abgesichert werden, dies wird häufig mit IPSec (siehe Abschnitt \ref{subsub:L3}) umgestzt. 
+Das Haupteinsatzgeiet eines VPNs über L2TP ist ein Site-to-Site oder eines Telearbeitsplatzes.   
 
 \subsection{Layer-3-Protokolle}
-\subsubsection{IPSec}
+Bei Layer-3-Protokolle erfolgt die Kapselung der Daten auf der Vermittlungsschicht, auch Internetschicht oder Netzwerkschicht genannt. Ein Standardprotokoll zur Herstellung von VPN-Verbindungen auf dieser Ebene ist IPSec.
+\subsubsection{Internet Protokol Security (IPSec)}
 \label{subsub:L3}
+Internet Protocol Security (IPSec) ist eine Protokollfamilie die drei Protokolle kombiniert, das IP Authentication Header (AH) zur Authentisierung, das Encapsulating Security Payload (ESP) ebenfalls zur Authentisierung und zur Verschlüsselung der Daten und das Internet Key Exchange (IKE) das zum Schlüsselaustausch und dem Verbindungsaufbau dient\footnote{Spezifiziert werden die Protokolle in den RFCs 4301,4302,4303 und 4306.}. Das AH und das ESP können einzeln oder zusammen genutzt werden. Da AH keine Verschlüsselung bietet ist für die Kommunikation über das Internet das ESP vorzuziehen. AH ist zur Authentifikation der Kommunikation in einem sicheren Netz geeignet \cite{isi-vpn}. Implementierungen von IPSec müssen deswegen ESP zur Verfügung stellen, die Einbindung von AH ist optional.
+
+Sowohl für End-to-End, Site-to-Site und End-to-Site Verbindungen kann IPSec genutzt werden \cite{rfc4301}.
+
+ Es gibt vielfältige Möglichkeiten IPSec zu konfigurieren, so ist zu beachten, dass es möglich ist ESP zu nutzen und dabei nur die Vertraulichkeit, nicht aber die Integrität sicherzustellen. Desweiteren besteht die Möglichkeit einen oder mehrere Tunnel für die Kommunikation zu nutzen. Die Sicherheit der Kommunikation  über IPSec ist abhängig von einer gewissenhaften Implementierung, Konfiguration und einer sicheren Systemumgebung \cite{rfc4301}. 
+  
+  IPSec ist sowohl für IPv4 als auch für IPv6 definiert, in IPv6 ist es bereits integriert.
+\\
+
+Es gibt zwei Benutzungsmodi: den Transportmodus und den Tunnelmodus. Im  Tunnelmodus kann ein klassisches VPN betrieben werden, hier werden IP-Pakete in anderen IP-Paketen gekapselt. Es wird also das gesamte IP-Paket geschützt, inklusive der getunnelten IP-Headerinformationen wie die tatsächliche Ziel und Absenderadresse. Ein Sicherheitsgateway, welches IPSec anbietet muss den Tunnelmodus implementieren und sollte auch dieses verwenden, der Transport von Daten im Transportmodus ist für Siherheitsgateways nur in Ausnahmefällen erlaubt. 
+
+Der Transportmodus 
+
+ 
+
+
+\section{Sicherheitsmaßnahmen}
+\subsubsection{Authentisierung}
+\subsubsection{Verschlüsselung}
+\subsubsection{Sicherheitsrichtlinien}
+
+
 \section{Architektur}
 Das VPN-Gateway kann an verschieden Stellen an das Netzwerk angeschlossen werden. Zu beachten ist
 
@@ -47,7 +74,7 @@ Das VPN-Gateway kann an verschieden Stellen an das Netzwerk angeschlossen werden
 
 \section{Anwendungsbereiche in privaten Haushalten}
 
-Virtuelle private Netzwerke werden auch im privaten Bereich  verwendet. Hier gibt es hauptsächlich zwei Anwendungsszenarien: der Zugriff aus der Ferne auf das Heimnetzwerk zur Bedienung des IoT (Internet of Things) oder der Zugriff auf die NAS als Cloud-Alternative oder
+Virtuelle private Netzwerke werden auch im privaten Bereich  verwendet. Hier gibt es hauptsächlich zwei Anwendungsszenarien: der Zugriff aus der Ferne auf das Heimnetzwerk zur Bedienung des IoT (Internet of Things) oder der Zugriff auf die NAS als Cloud-Alternative oder aber als Technologie zum Anonymen surfen im Internet oder zum Überwinden von Geoblocking. 
 
 
 
