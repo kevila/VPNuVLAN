@@ -48,17 +48,21 @@ Sowohl für End-to-End, Site-to-Site und End-to-Site Verbindungen kann IPSec gen
   IPSec ist sowohl für IPv4 als auch für IPv6 definiert, in IPv6 ist es bereits integriert.
 \\
 
-Es gibt zwei Benutzungsmodi: den Transportmodus und den Tunnelmodus. Im  Tunnelmodus kann ein klassisches VPN betrieben werden, hier werden IP-Pakete in anderen IP-Paketen gekapselt. Es wird also das gesamte IP-Paket geschützt, inklusive der getunnelten IP-Headerinformationen wie die tatsächliche Ziel und Absenderadresse. Ein Sicherheitsgateway, welches IPSec anbietet muss den Tunnelmodus implementieren und sollte auch dieses verwenden, der Transport von Daten im Transportmodus ist für Siherheitsgateways nur in Ausnahmefällen erlaubt. 
+Es gibt zwei Benutzungsmodi: den Transportmodus und den Tunnelmodus. Im  Tunnelmodus kann ein klassisches VPN betrieben werden, hier werden IP-Pakete in anderen IP-Paketen gekapselt. Es wird also das gesamte IP-Paket geschützt, inklusive der getunnelten IP-Headerinformationen wie die tatsächliche Ziel und Absenderadresse. Ein Sicherheitsgateway, welches IPSec anbietet muss den Tunnelmodus implementieren und sollte auch dieses verwenden, der Transport von Daten im Transportmodus ist für Sicherheitsgateways nur in Ausnahmefällen erlaubt \cite{rfc4301}. 
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{ahesp.001.png}
+	\caption{Transportmodus und Tunnelmodus des IPSec nach \cite{lipp2007vpn}}
+	\label{ahesp}
+\end{figure}
+Im Transportmodus werden die IP-Pakete nicht getunnelt sondern nur ihre Authentizitat und Integrität mittels AH gewährleistet oder zusätzlich die Vertraulichkeit mittels ESP. 
 
-Der Transportmodus 
+Abbildung \ref{ahesp} zeigt den Unterschied von Transport und Tunnelmodes anhand der Paketstruktur unter Benutzung von AH und ESP. 
 
  
 
 
 \section{Sicherheitsmaßnahmen}
-\subsubsection{Authentisierung}
-\subsubsection{Verschlüsselung}
-\subsubsection{Sicherheitsrichtlinien}
+
 
 
 \section{Architektur}
