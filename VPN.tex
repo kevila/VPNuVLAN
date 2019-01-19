@@ -26,20 +26,21 @@ Die Basistechnologie die einem VPN zugrunde liegt ist das \emph{Tunneling}. Es h
  Im Folgenden sollen die wichtigsten standardisierten  Tunneling Protokolle zur VPN-Realisierung vorgestellt werden
 
 \subsection{Layer-2-Protokolle}
-Tunneling Protokolle die auf der Sicherungsschicht arbeiten....
+Tunneling Protokolle die auf der Sicherungsschicht arbeiten, könne auch in nicht IP-Netzen betrieben werden, da sie unterhalb der IP-Schicht ansetzen. Die verbreitetsten sind das PPTP (Point-to-Poit-Tunneling-Protocol), das L2F  (Layer-two-Forwarding) und das L2TP (Layer two Tunneling Protocol). Da L2TP eine Weiterentwicklung der beiden anderen Protokolle ist \cite{lipp2007vpn} wird dieses stellvertreted für Tunnelingprotokolle auf der Sicherungsschicht im Folgenden näher beschrieben.
 
 
 \subsubsection{Layer 2 Tunneling Protocol (L2TP)}
-Das L2TP ist der Nachfolger der Tunneling Protokolle PPTP (Point-to-Poit-Tunneling-Protokol) und L2F (Layer-two-Forwarding) \cite{isi-vpn}. Es kapselt Daten in PPP (Point-to-Point-Protocol \footnote{spezifiziert in RFC 1661: https://www.rfc-editor.org/rfc/rfc1661.txt}) Rahmen, ein Ende-zu-Ende Protokoll auf der Vermittlungsschicht, somit ist es möglich auch nicht-IP Pakete über das Internet zu transportieren \cite{gokulakrishnan2014survey}. Zur Authentisierung dienen die Protokolle EAP (Extensible Authentication Protocol) und CHAP (Challenge Handshake Protocol). Wobei CHAP nach \cite{eckert2018sicherheit}
+Das L2TP ist der Nachfolger der Tunneling Protokolle PPTP und L2F \cite{isi-vpn}. Es kapselt Daten in PPP (Point-to-Point-Protocol \footnote{spezifiziert in RFC 1661: https://www.rfc-editor.org/rfc/rfc1661.txt}) Rahmen, ein Ende-zu-Ende Protokoll auf der Vermittlungsschicht, somit ist es möglich auch nicht-IP Pakete über das Internet zu transportieren \cite{gokulakrishnan2014survey}. Zur Authentisierung dienen die Protokolle EAP (Extensible Authentication Protocol) und CHAP (Challenge Handshake Protocol), die von PPP übernommen werden. Wobei CHAP nach \cite{eckert2018sicherheit} veraltet ist. 
 Es können mehrere Verbindungen über einen einzigen L2TP Tunnel laufen, auch alle Management und Wartungsinformationen werden über diesen einen Tunnel ausgetauscht \cite{bohmer2005vpn}.
-Da weder L2TP noch PPP die Vertraulichkeit der Daten gewähren, muss die Kommunikation zusätzlich abgesichert werden, dies wird häufig mit IPSec (siehe Abschnitt \ref{subsub:L3}) umgestzt. 
+
+Da weder L2TP noch PPP die Vertraulichkeit der Daten gewähren, muss die Kommunikation zusätzlich abgesichert werden, dies kann bei Datenverkehr über das Internet mit IPSec (siehe Abschnitt \ref{subsub:L3}) umgesetzt werden. 
 Das Haupteinsatzgeiet eines VPNs über L2TP ist ein Site-to-Site oder eines Telearbeitsplatzes.   
 
 \subsection{Layer-3-Protokolle}
 Bei Layer-3-Protokolle erfolgt die Kapselung der Daten auf der Vermittlungsschicht, auch Internetschicht oder Netzwerkschicht genannt. Ein Standardprotokoll zur Herstellung von VPN-Verbindungen auf dieser Ebene ist IPSec.
 \subsubsection{Internet Protokol Security (IPSec)}
 \label{subsub:L3}
-Internet Protocol Security (IPSec) ist eine Protokollfamilie die drei Protokolle kombiniert, das IP Authentication Header (AH) zur Authentisierung, das Encapsulating Security Payload (ESP) ebenfalls zur Authentisierung und zur Verschlüsselung der Daten und das Internet Key Exchange (IKE) das zum Schlüsselaustausch und dem Verbindungsaufbau dient\footnote{Spezifiziert werden die Protokolle in den RFCs 4301,4302,4303 und 4306.}. Das AH und das ESP können einzeln oder zusammen genutzt werden. Da AH keine Verschlüsselung bietet ist für die Kommunikation über das Internet das ESP vorzuziehen. AH ist zur Authentifikation der Kommunikation in einem sicheren Netz geeignet \cite{isi-vpn}. Implementierungen von IPSec müssen deswegen ESP zur Verfügung stellen, die Einbindung von AH ist optional.
+Internet Protocol Security (IPSec) ist ein Internetprotokoll bestehend aus drei Komponeneten: dem IP Authentication Header (AH) zur Authentisierung, dem Encapsulating Security Payload (ESP) ebenfalls zur Authentisierung und zur Verschlüsselung der Daten und dem Internet Key Exchange (IKEv2) das zum Schlüsselaustausch und dem Verbindungsaufbau dient\footnote{Spezifiziert werden die Protokolle in den RFCs 4301,4302,4303 und 4306.}. Das AH und das ESP können einzeln oder zusammen genutzt werden. Da AH keine Verschlüsselung bietet ist für die Kommunikation über das Internet das ESP vorzuziehen. AH ist zur Authentifikation der Kommunikation in einem sicheren Netz geeignet \cite{isi-vpn}. Implementierungen von IPSec müssen deswegen ESP zur Verfügung stellen, die Einbindung von AH ist optional.
 
 Sowohl für End-to-End, Site-to-Site und End-to-Site Verbindungen kann IPSec genutzt werden \cite{rfc4301}.
 
@@ -62,7 +63,7 @@ Die Grafik zeigt außerdem einen weiteren Unterschied zwischen ESP und AH: der D
 ESP schützt jeweils den IP-Header nicht mit und kann somit auch bei Verwendung von NAT genutzt werden. 
 
  
-
+\subsection{Anwendungsschicht}
 
 \section{Sicherheitsmaßnahmen}
 
@@ -79,9 +80,28 @@ Das VPN-Gateway kann an verschieden Stellen an das Netzwerk angeschlossen werden
 
 
 
-\section{Anwendungsbereiche in privaten Haushalten}
+\section{VPN in privaten Haushalten}
 
-Virtuelle private Netzwerke werden auch im privaten Bereich  verwendet. Hier gibt es hauptsächlich zwei Anwendungsszenarien: der Zugriff aus der Ferne auf das Heimnetzwerk zur Bedienung des IoT (Internet of Things) oder der Zugriff auf die NAS als Cloud-Alternative oder aber als Technologie zum Anonymen surfen im Internet oder zum Überwinden von Geoblocking. 
+Virtuelle private Netzwerke werden auch im privaten Bereich  verwendet. Hier gibt es verschiedene Anwendungsszenarien: der Zugriff aus der Ferne auf das Heimnetzwerk zum Beispiel zur Bedienung des IoT (Internet of Things) oder der Zugriff auf die NAS als Cloud-Alternative, als Technologie zum Anonymen surfen im Internet oder zum Überwinden von Geoblocking, oder um seine eigene Sicherheit beim Internetzugang über einen öffentlichen unsicheren Zugangspunkt zu wahren. Auch das BSI empfielht  Privatpersonen ausdrücklich die Nutzung eines VPNs beim surfen in unsicheren WLAN HotSpots \cite{bsibuergervpn}.
+
+In Länder in denen Regierungen stark in die Nutzung des Internets eingreifen und diese einschränken, ist die Nutzung von VPN populär um diese Einschränkungen zu umgehen.\\
+
+
+\begin{figure}[h]
+	\includegraphics[width=\linewidth,height=8cm]{vpnPrivat.001.jpeg}
+	\caption{Schema eines VPNs zur Anonymen Internetnutzung.}
+	\label{vpnPrivat}
+\end{figure}
+
+VPN wird also nicht ausschließlich genutzt, um aus der Ferne auf ein bestimmtes Intranet, bzw. sein Heimnetz zuzugreifen, sondern, um von dem Heimnetz oder einem Mobilgerät privat bis zu einem bestimmten, vom VPN Dienstleister angebotenen Tunnelendpunkt zu gelangen. 
+
+Abbildung \ref{vpnPrivat} zeigt das Prinzip dieses VPN Andwendungsfalls. Auf dem Endgerät des Anwenders wird eine Software des VPN Anbieters Installiert, die dann einen VPN-Tunnel zu einem Server des Anbieters aufbaut über den der gesamte Internetverkehr geleitet wird. Von dort wird die Kommunikation dann zum eigentlichen Ziel im Internet weitergeleitet. Die aufgerufenen Web-Server können den Ursprung der Kommunikation nicht nachvollziehen, für sie findet der Datenaustausch mit dem Server des Anbieters statt. 
+Die Server (Exit Points) können sich in verschiedenen Ländern befinden, um zum Beispiel Geoblocking oder Gesetze im eigenen Land zu umgehen \cite{perta2015glance}. \\
+
+Da es sich um Trusted VPNs handelt ist die Nutzersicherheit und -anonymität vom Anbieter abhängig. Inwieweit sich die Anbieter an ihre Versprechen halten und was sie mit den Daten der Anwender machen ist für diesen nicht einfach zu überprüfen. 
+
+
+Perta und Kollegen \cite{perta2015glance} haben im Jahr 2015 Kommerzielle VPN Anbieter auf die Sicherheitsrisiken \emph{IPv6 Leakage} und \emph{DNS Hijacking} untersucht. IPv6 Leakage kommt vor, wenn der VPN-Tunnel den  IPv4 Datenverkehr sichert, nich aber den Datenverkehr der über IPv6 läuft, sodass die Kommunikation weder verschlüsselt noch anonym ist. Bei DNS-Hijacking Angriffen werden Anfragen an DNS\footnote{Domain Name System}-Anfragen auf DNS-Server eines Angreifers umgeleitet- 
 
 
 
