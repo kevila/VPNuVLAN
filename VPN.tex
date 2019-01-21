@@ -38,6 +38,7 @@ Das Haupteinsatzgeiet eines VPNs über L2TP ist ein Site-to-Site oder eines Tele
 
 \subsection{Layer-3-Protokolle}
 Bei Layer-3-Protokolle erfolgt die Kapselung der Daten auf der Vermittlungsschicht, auch Internetschicht oder Netzwerkschicht genannt. Ein Standardprotokoll zur Herstellung von VPN-Verbindungen auf dieser Ebene ist IPSec.
+
 \subsubsection{Internet Protokol Security (IPSec)}
 \label{subsub:L3}
 Internet Protocol Security (IPSec) ist ein Internetprotokoll bestehend aus drei Komponeneten: dem IP Authentication Header (AH) zur Authentisierung, dem Encapsulating Security Payload (ESP) ebenfalls zur Authentisierung und zur Verschlüsselung der Daten und dem Internet Key Exchange (IKEv2) das zum Schlüsselaustausch und dem Verbindungsaufbau dient\footnote{Spezifiziert werden die Protokolle in den RFCs 4301,4302,4303 und 4306.}. Das AH und das ESP können einzeln oder zusammen genutzt werden. Da AH keine Verschlüsselung bietet ist für die Kommunikation über das Internet das ESP vorzuziehen. AH ist zur Authentifikation der Kommunikation in einem sicheren Netz geeignet \cite{isi-vpn}. Implementierungen von IPSec müssen deswegen ESP zur Verfügung stellen, die Einbindung von AH ist optional.
@@ -63,14 +64,31 @@ Die Grafik zeigt außerdem einen weiteren Unterschied zwischen ESP und AH: der D
 ESP schützt jeweils den IP-Header nicht mit und kann somit auch bei Verwendung von NAT genutzt werden. 
 
  
-\subsection{Anwendungsschicht}
+\subsection{Anwendungsschicht VPN}
+
+Der Begriff VPN wird in der Literatur auch für verschlüsselte Verbindungen verwendet. So wird zum Beispiel die Verbindung über SSL bzw. TLS (Secure Socket Layer bzw. Transport Layer Security) als VPN bezeichnet \cite{isi-vpn} \cite{singh2012enhancing}, obwohl hier kein Tunnel aufgebaut wird, sondern verschlüsselte Verbindungen zwischen einzelnen Anwendungen aufgebaut werden. Die Protokolle TLS und SSL sind im Protokollstapel (vgl. Anhang \ref{A1}) zwischen Anwendungsschicht und Transportschicht angesiedelt. 
 
 \section{Sicherheitsmaßnahmen}
+Da über die virtuellen Netze sensible Firmendaten über das Internet ausgetauscht werden und evtl. voller Zugriff auf das Firmennetz besteht \cite{singh2012enhancing}, sind VPN Verbindungen besonders abzusichern. Das beginnt bei einer sorgfältigen Planung und Umsetzung des VPN Einsatzes bestehend aus den Teilaufgaben \cite{bsivpn}: 
+\begin{itemize}
+	\item Anforderungsanalyse
+	\item Planung 
+	\item Beschaffung
+	\item Umsetzung 
+	\item Betrieb
+	\item Aussonderung (Abschaltung nicht mehr benötigter Zugänge)
+	\item Notfallvorsorge.
+\end{itemize} 
+Zu jedem Aufgabenteil gibt es auf der Webseite des BSI ein oder mehrere Bausteine. 
+Dabei sollte als Teil der IT-Sicherheitsleitlinie des Unternehmens auch eine VPN-Sicherheitsleitlinie erstellt werden. 
+Auch wenn die Maßnahmenkataloge des BSI sich in erster Linie an Behörden und große Unternehmen richten, sind sie auch für kleine Unternehmen relevant. In vielen Bausteinen werden Varianten für kleine Unternehmen vorgestellt, des Weiteren wird das Erstellen einer Sicherheitsleitlinie auch für kleine Unternehmen empfohlen. 
 
 
 
-\section{Architektur}
-Das VPN-Gateway kann an verschieden Stellen an das Netzwerk angeschlossen werden. Zu beachten ist
+
+
+\subsection{Architektur}
+Das VPN-Gateway kann an verschieden Stellen an das Netzwerk angeschlossen werden. Liegt eine P-A-P Struktur zwischen Internet und Intranet vor empfiehlt das BSI die in Abbildung \ref{vpnarch} gezeigte Anbindung des VPN-Gateways \cite{isi-lana}. 
 
 \begin{figure}[h]
 	\includegraphics[width=\linewidth]{vpnarchitektur.jpeg}
@@ -78,7 +96,9 @@ Das VPN-Gateway kann an verschieden Stellen an das Netzwerk angeschlossen werden
 	\label{vpnarch}
 \end{figure}
 
-
+Durch die Platzierung hinter dem zum Internet gerichteten Paketfilter, ist die VPN-Gateway vor Angriffen aus dem Internet geschützt und durch die Platzierung vor dem ALG kann die eingehende Kommunikation entschlüsselt und auch auf Anwendungsebene Untersucht werden \cite{bsivpnaufbau}.\\
+ 
+%Erfolgt die Anbindung an das Internet aus Kostengründen mit nur einer Firewall
 
 \section{VPN in privaten Haushalten}
 
@@ -101,7 +121,18 @@ Die Server (Exit Points) können sich in verschiedenen Ländern befinden, um zum
 Da es sich um Trusted VPNs handelt ist die Nutzersicherheit und -anonymität vom Anbieter abhängig. Inwieweit sich die Anbieter an ihre Versprechen halten und was sie mit den Daten der Anwender machen ist für diesen nicht einfach zu überprüfen. 
 
 
-Perta und Kollegen \cite{perta2015glance} haben im Jahr 2015 Kommerzielle VPN Anbieter auf die Sicherheitsrisiken \emph{IPv6 Leakage} und \emph{DNS Hijacking} untersucht. IPv6 Leakage kommt vor, wenn der VPN-Tunnel den  IPv4 Datenverkehr sichert, nich aber den Datenverkehr der über IPv6 läuft, sodass die Kommunikation weder verschlüsselt noch anonym ist. Bei DNS-Hijacking Angriffen werden Anfragen an DNS\footnote{Domain Name System}-Anfragen auf DNS-Server eines Angreifers umgeleitet- 
+Perta und Kollegen \cite{perta2015glance} haben im Jahr 2015 Kommerzielle VPN Anbieter auf die Sicherheitsrisiken \emph{IPv6 Leakage} und \emph{DNS Hijacking} untersucht. IPv6 Leakage kommt vor, wenn der VPN-Tunnel den  IPv4 Datenverkehr sichert, nich aber den Datenverkehr der über IPv6 läuft, sodass die Kommunikation weder verschlüsselt noch anonym ist. Dies ist der Fall, wenn der VPN-Client nur die Routingtabelle für den IPv4 Datenverkehr bearbeitet und die für IPv6 unberührt lässt. 
+ Bei DNS-Hijacking Angriffen werden Anfragen an DNS\footnote{Domain Name System}-Anfragen auf DNS-Server eines Angreifers umgeleitet, dieser kann so kontrolle sowohl über den Dantenverkehr über IPv6 als auch über den Datenverkehr über IPv4 erlangen. 
+Die Studie zeigt, dass die Versionen der VPN-Clients für Desktop Betriebssysteme bis auf vier ausnahmen anfällig für IPv6 Leakage waren. Auf dem mobilen Betriebssystem Android wurde IPv6 Leakage bei allen VPN Services beobachtet und bei iOS konnte kein IPv6 Leakage festgestellt werden, da hier der komplette IPv6 Datenverkehr abgeschaltet wurde während der Tunnel besteht. 
+Auch für DNS-Hijacking, welches über verschiedene Methoden durchgeführt wurde, ist die Mehrheit der Anbieter anfällig, hier gab es allerdings mehr Ausnahmen. Die Kommunikation über Android-Versionen nach KitKat ist immun gegen die getesteten Angriffsarten, da die Umleitung des Datenverkehrs in den VPN-Tunnel hier über Firewalleinstellungen vorgenommen wird und nicht über die Manipulation der Routing-Tabellen. 
+
+Von den Autoren vorgeschlagene Gegenmaßnahmen zur Verhinderung von IPv6 Leakage sind
+ den gesamten IPv6 Datenverkehr abschalten oder auch die IPv6 Routing Tabelle zu bearbeiten. 
+ Als Gegenmaßnahmen zu DNS-Hijacking sollte der VPN-Client mindestens regelmäßig die korrekte Funktionsweise von DNS testen. Die bessere Möglichkeit sieht das Autorenteam in dem von Android gewählten Ansatzes: das Umleiten in den Tunnel durch Firewallregeln und nicht durch die Routingtabelle. Eine weitere effektive Lösung wäre es, wenn DNS-Server nur noch durch den Tunnel erreicht werden können. 
+  
+
+
+ 
 
 
 
