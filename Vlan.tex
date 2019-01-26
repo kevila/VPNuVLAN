@@ -32,7 +32,7 @@ Das in Abbildung \ref{vlanpak} gezeigte \emph{tagged} VLAN ermöglicht es, dass 
 
 Die Zugehörigkeit der Pakete zu einem VLAN wird über einen VLAN-Tag nach dem Standard  IEEE 802.1Q am Ehternet-Frame gekennzeichnet.\\
 
-Es wird zwischen statischen und dynamischen VLAN Implementierungen unterschieden. Beim statischen VLAN wird 
+Es wird zwischen statischen und dynamischen VLAN Implementierungen unterschieden. Beim statischen VLAN werden Ports fest einem VLAN zugeordnet. Dynamisches VLAN ordnet das VLAN anhand von MAC- oder IP-Adressen zu, wird das Gerät an einen anderen Port angeschlossen ändert sich entsprechend das VLAN des Ports. Dynamisches VLAN ist zwar für den Administrator sehr angenehm, da ihm Arbeit abgenommen wird, aufgrund der leichten Fälschbarkeit von MAC- und IP-Adressen wird vom BSI von der Nutzung von Dynamischen VLANs abgeraten \cite{bsiLogSeg}
 \\
 
 Bei der Auslieferung sind in einem Switch alle Ports demselben \emph{default} VLAN zugeordnet. Wenn der Switch in Betrieb genommen wird sollten einige, im Folgenden erläuterte,  Punkte beachtet werden. Alle Ports die nicht verwendet werden sollten ein eigenes VLAN bekommen, das ins leere läuft. Bei der Verwendung von Trunks zwischen Switches gibt es ein \emph{native} VLAN über das Pakete gesendet werden, die keinen Tag haben. Solche Pakete können von Switches stammen, die kein Protokoll mit tagging unterstützen. Dieses native VLAN sollte ein eigenes VLAN sein, um hier keine Angriffspunkte zu bieten. Außerdem sollte ein gesondertes \emph{management} VLAN erstellt werden über das Zugriff auf die Konfiguration des  Switches besteht. 
@@ -44,24 +44,45 @@ Bei der Auslieferung sind in einem Switch alle Ports demselben \emph{default} VL
 
 \glqq Entgegen den Aussagen einiger Hersteller muss berücksichtigt werden, dass VLANs nicht entwickelt wurden, um Sicherheitsanforderungen bei der Trennung von Netzen zu erfüllen.\grqq (Bundesamt für Siherheit in der Informationstechnik: \cite{bsiswitch}).\\
 
-Trotzdem bringen VLANs gerade für kleinere Unternehmen einige Vorteile in der Datensicherheit, da sie, richtig konfiguriert, zumindest eine zusätzliche Hürde für Angreifer darstellen.
+Trotzdem bringen VLANs gerade für kleinere Unternehmen einige Vorteile in der Datensicherheit, da sie, richtig konfiguriert, zumindest eine zusätzliche Hürde für Angreifer darstellen. 
 
 Zunächst sollen mögliche Angriffe auf virtuelle LANs vorgestellt werden.
 
- \subsubsection{VLAN Hopping}
-  Bein VLAN Hopping befindet sich ein Angreifer in einem VLAN und versucht in ein anderes VLAN zu gelangen\cite{alabady2008design}. 
+ \paragraph{VLAN Hopping}
+  \begin{addmargin}[1cm]{0,5cm} 
+
+  {Bein VLAN Hopping befindet sich ein Angreifer in einem VLAN und versucht in ein anderes VLAN zu gelangen\cite{alabady2008design}. 
   Eine Möglichkeit hierzu ist das \emph{double tagging}. Befindet sich der Angreifer in dem Vlan das als natives VLAN konfiguriert wurde kann er ein Ethernet Frame mit zwei Tags abschicken, den des nativen VLANs und einem weiteren des Ziel VLANs. Das Switch entfernt dann den ersten Tag und leitet den Frame weiter, ohne ein neues Tag hinzuzufügen, da die bei dem nativen VLAN nicht benötigt wird. Gelangt das Paket nun über einen Trunk zu einem weiteren Switch sieht dieser nur den zweiten Tag und leitet den Frame an das Opfer-VLAN weiter.
   Um diese Art des Angriffs zu Verhindern sollten keine Geräte an das native VLAN angeschlossen werden \cite{cisco14rout}.\\
   
-  
+ 
   
  Eine weitere Form des VLAN Hoppings ist das \emph{switch spoofing}, welches ausnutzt, dass einige Switches automatisch erkennen, wenn ein anderer Switch versucht eine Trunk Verbindung aufzubauen und diese erwidern. Ein Angreifer kann vorgeben ein anderes Switch zu sein und somit erreichen, dass ein switch mit ihm eine Trunk-Verbindung eingeht, so bekommt der Angreifer die Kommunikation aller VLAN gesendet. 
  
- Die Funktion des Automatischen Trunkings sollte für alle nicht-Trunk-Ports ausgeschaltet werden um switch spoofing zu verhindern \cite{cisco14rout}. 
+ Die Funktion des Automatischen Trunkings sollte für alle nicht-Trunk-Ports ausgeschaltet werden um switch spoofing zu verhindern \cite{cisco14rout}. }
  
-  
+  \end{addmargin}
    
  
+ \paragraph{MAC-Flooding}
+ \begin{addmargin}[1cm]{1cm}
+ In einem Switch gibt es eine Tabelle, die festhält an welchen Port ein Paket für eine MAC-Adresse gesendet werden soll. Da diese Tabelle nur begrenten Speicherplatz hat, kann ein Angreifer versuchen sie mit falschen MAC-Adressen zu füllen. Ist der Speicher belegt wird der Switch alle Pakete an alle Ports des VLANs senden und der Angreifer kann die gesamte Kommunikation mitschneiden\cite{mehdizadeha2017virtual}.
+Eine Gegenmaßnahme ist es die MAC Adressen Manuell in die Tabelle einzutragen \cite{akram2017future}, also eine automatische Aktualisierung der Tabelle zu unterbinden. \\
  
+ 	
+ \end{addmargin}
+
+
+Das BSI gibt folgende Empfehlungen zur sicheren Nutzung von VLANs \cite{bsiLogSeg}: 
+Bereiche mit sehr hohem Schutzbedarf sollten nicht nur durch VLAN sondern physisch von anderen Bereichen des Netzwerkes getrennt werden. Innerhalb eines VLANs sollten nur Arbeitsgruppen mit gleich hohem Schutzbedarf sein. Ein VLAN sollte sich nicht über verschiedene Zonen der Grundarchitektur (vgl. Kapitel \ref{K1} ) erstrecken. Sensible Daten sollten verschlüsselt übertragen werden.\\
+VLANs eignen sich zur Trennung von Netzen mit unterschiedlichem Schutzbedarf im Internen Netz.
+
+
+
+
+
+
+
+
 
 
