@@ -23,7 +23,10 @@ Die Basistechnologie die einem VPN zugrunde liegt ist das \emph{Tunneling}. Es h
 	\label{tunnel}
 \end{figure}
 
- Im Folgenden sollen die wichtigsten standardisierten  Tunneling Protokolle zur VPN-Realisierung vorgestellt werden
+Um sichere Verbindungen zu schaffen und die Schutzziele Authetizität, Integrität und Vertraulichkeit zu wahren, müssen sich die Kommunikationspartner authentisieren, die Integrität der Daten kann durch Verfahren wie die Berechnung von MACs (Massage Authentication Code) erreicht werden und um Kommunikation vertraulich zu halten müssen die Daten verschlüsselt werden.  
+
+ Im Folgenden sollen die wichtigsten standardisierten  Tunneling Protokolle zur VPN-Realisierung vorgestellt werden.
+ 
 
 \subsection{Layer-2-Protokolle}
 Tunneling Protokolle die auf der Sicherungsschicht arbeiten, könne auch in nicht IP-Netzen betrieben werden, da sie unterhalb der IP-Schicht ansetzen. Die verbreitetsten sind das PPTP (Point-to-Poit-Tunneling-Protocol), das L2F  (Layer-two-Forwarding) und das L2TP (Layer two Tunneling Protocol). Da L2TP eine Weiterentwicklung der beiden anderen Protokolle ist \cite{lipp2007vpn} wird dieses stellvertreted für Tunnelingprotokolle auf der Sicherungsschicht im Folgenden näher beschrieben.
@@ -34,7 +37,7 @@ Das L2TP ist der Nachfolger der Tunneling Protokolle PPTP und L2F \cite{isi-vpn}
 Es können mehrere Verbindungen über einen einzigen L2TP Tunnel laufen, auch alle Management und Wartungsinformationen werden über diesen einen Tunnel ausgetauscht \cite{bohmer2005vpn}.
 
 Da weder L2TP noch PPP die Vertraulichkeit der Daten gewähren, muss die Kommunikation zusätzlich abgesichert werden, dies kann bei Datenverkehr über das Internet mit IPSec (siehe Abschnitt \ref{subsub:L3}) umgesetzt werden. 
-Das Haupteinsatzgeiet eines VPNs über L2TP ist ein Site-to-Site oder eines Telearbeitsplatzes.   
+Das Haupteinsatzgeiet eines VPNs über L2TP ist ein Site-to-Site oder eines Telearbeitsplatzes \cite{isi-vpn}.   
 
 \subsection{Layer-3-Protokolle}
 Bei Layer-3-Protokolle erfolgt die Kapselung der Daten auf der Vermittlungsschicht, auch Internetschicht oder Netzwerkschicht genannt. Ein Standardprotokoll zur Herstellung von VPN-Verbindungen auf dieser Ebene ist IPSec.
@@ -68,17 +71,22 @@ ESP schützt jeweils den IP-Header nicht mit und kann somit auch bei Verwendung 
 
 Der Begriff VPN wird in der Literatur auch für verschlüsselte Verbindungen verwendet. So wird zum Beispiel die Verbindung über SSL bzw. TLS (Secure Socket Layer bzw. Transport Layer Security) als VPN bezeichnet \cite{isi-vpn} \cite{singh2012enhancing}, obwohl hier kein Tunnel aufgebaut wird, sondern verschlüsselte Verbindungen zwischen einzelnen Anwendungen aufgebaut werden. Die Protokolle TLS und SSL sind im Protokollstapel (vgl. Anhang \ref{A1}) zwischen Anwendungsschicht und Transportschicht angesiedelt. 
 
+\subsection{Kombinierte Tunnel L2TP/IPSec}
+
+Verschiedene Tunneling Protokolle haben unterschiedliche Vor- und Nachteile.  IPSec hat viele Optionen um die Sichere Kommunikation zu gewährleisten, L2TP ist flexibel und kann auch nicht-IP Kommunikation tunneln. Beide Tunnel können ineinander verschachtelt werden, um die Vorteile beider zu nutzen. Zu Beachten ist hierbei, dass der eine Tunnel komplett vom anderen Tunnel umschlossen wird. \cite{lipp2007vpn}.
+
+
 \section{Sicherheitsmaßnahmen}
-Da über die virtuellen Netze sensible Firmendaten über das Internet ausgetauscht werden und evtl. voller Zugriff auf das Firmennetz besteht \cite{singh2012enhancing}, sind VPN Verbindungen besonders abzusichern. Das beginnt bei einer sorgfältigen Planung und Umsetzung des VPN Einsatzes bestehend aus den Teilaufgaben \cite{bsivpn}: 
-\begin{itemize}
-	\item Anforderungsanalyse
-	\item Planung 
-	\item Beschaffung
-	\item Umsetzung 
-	\item Betrieb
-	\item Aussonderung (Abschaltung nicht mehr benötigter Zugänge)
-	\item Notfallvorsorge.
-\end{itemize} 
+Da über die virtuellen Netze sensible Firmendaten über das Internet ausgetauscht werden und evtl. voller Zugriff auf das Firmennetz besteht \cite{singh2012enhancing}, sind VPN Verbindungen besonders abzusichern. Das beginnt bei einer sorgfältigen Planung und Umsetzung des VPN Einsatzes bestehend aus den Teilaufgaben \cite{bsivpn} 
+
+	 Anforderungsanalyse,
+ Planung ,
+	 Beschaffung,
+	 Umsetzung ,
+ Betrieb,
+	 Aussonderung (Abschaltung nicht mehr benötigter Zugänge) und
+	Notfallvorsorge.
+
 Zu jedem Aufgabenteil gibt es auf der Webseite des BSI ein oder mehrere Bausteine. 
 Dabei sollte als Teil der IT-Sicherheitsleitlinie des Unternehmens auch eine VPN-Sicherheitsleitlinie erstellt werden. 
 Auch wenn die Maßnahmenkataloge des BSI sich in erster Linie an Behörden und große Unternehmen richten, sind sie auch für kleine Unternehmen relevant. In vielen Bausteinen werden Varianten für kleine Unternehmen vorgestellt, des Weiteren wird das Erstellen einer Sicherheitsleitlinie auch für kleine Unternehmen empfohlen. 
