@@ -1,7 +1,7 @@
 \chapter{Virtuelle LANs}
 
-Virtuelle Netze oder auch virtuelle local area networks (VLAN) ermöglichen es, bestehende physische LANs in logische Abschnitte zu Unterteilen, oder auch mehrere physische Netzabschnitte virtuell zu verbinden. VLANs werden mithilfe von Switches gebildet. Switche sind Netzwerkkomponenten, welche die Schichten eins und zwei des Internetprotokollstapels (vgl. Anhang \ref{A1}) implementieren, sie bilden heute die Zentralen Netzknoten in (lokalen) Netzwerken \cite{zisler2018computer}. 
-Durch das Verwenden von VLANs können Kosten gespart werden, wenn mehrere Netzwerke durch weniger  Hardware realisiert werden können. Virtuelle Netze sind flexibler als physische Netze. In größeren Netzwerken kommt außerdem die Tatsache zum tragen, dass die Broadcastdomänen durch die logische segmentierung verkleinert werden, da Broadcasts die innerhalb ihres VLANs bleiben.
+Virtuelle Netze oder auch virtual local area networks (VLAN) ermöglichen es, bestehende physische LANs in logische Abschnitte zu unterteilen, oder auch mehrere physische Netzabschnitte virtuell zu verbinden. VLANs werden mithilfe von Switches gebildet. Switche sind Netzwerkkomponenten, welche die Schichten eins und zwei des Internetprotokollstapels (vgl. Anhang \ref{A1}) implementieren, sie bilden heute die zentralen Netzknoten in (lokalen) Netzwerken \cite{zisler2018computer}. 
+Durch das Verwenden von VLANs können Kosten gespart werden, wenn mehrere Netzwerke durch weniger  Hardware realisiert werden können. Virtuelle Netze sind flexibler als physische Netze. In größeren Netzwerken kommt außerdem die Tatsache zum Tragen, dass die Broadcastdomänen durch die logische Segmentierung verkleinert werden, da Broadcasts  innerhalb ihres VLANs bleiben.
 
 %nutzen hinzufügen
 
@@ -9,8 +9,8 @@ Durch das Verwenden von VLANs können Kosten gespart werden, wenn mehrere Netzwe
 
 % portbasiertes und tagged Vlan
 
-Es gibt zwei Arten von Vlans, das portbasierte und das \emph{tagged VLAN}. 
-Bei dem in Abbildung \ref{vlanport} dargestellten portbasiertem VLAN, wir jeder Port eines Switches einem VLAN zugewiesen. Soll nun eine Kommunikation zwischen den Geräten, die a VLAN A angeschlossen sind und jenen aus VLAN B stattfinden, müssen jeweils ein Port aus VLAN A mit einem aus VLAN B per Kabel verbunden werden und ein Router müsste zwischen diesen Netzen vermitteln\cite{cisco14rout}.  
+Es gibt zwei Arten von VLANs, das portbasierte und das \emph{tagged VLAN}. 
+Bei dem in Abbildung \ref{vlanport} dargestellten portbasierten VLAN, wird jeder Port eines Switches einem VLAN zugewiesen. Soll nun eine Kommunikation zwischen den Geräten, die an VLAN A angeschlossen sind und jenen aus VLAN B, stattfinden, müssen jeweils ein Port aus VLAN A mit einem aus VLAN B per Kabel verbunden werden und ein Router müsste zwischen diesen Netzen vermitteln \cite{cisco14rout}.  
 
 
 \begin{figure}[h]
@@ -21,7 +21,7 @@ Bei dem in Abbildung \ref{vlanport} dargestellten portbasiertem VLAN, wir jeder 
 \end{figure}
 
 
-Das in Abbildung \ref{vlanpak} gezeigte \emph{tagged} VLAN ermöglicht es, dass ein Port auch mehreren VLANs zugeordnet werden kann. Bei  diese Art des virtuellen Netzes können VLANs, die über  Switche verteilt sind mit nur einem Kabel verbunden werden, wofür sonst je VLAN ein Kabel verwendet werden müssten. Die Verbindung zwischen zwei Switches über die mehrere VLANs laufen wird Trunk genannt \cite{cisco14rout}. 
+Das in Abbildung \ref{vlanpak} gezeigte \emph{tagged} VLAN ermöglicht es, dass ein Port auch mehreren VLANs zugeordnet werden kann. Bei  dieser Art des virtuellen Netzes können VLANs, die über  Switche verteilt sind, mit nur einem Kabel verbunden werden, wofür sonst je VLAN ein Kabel verwendet werden müsste. Die Verbindung zwischen zwei Switches, über die mehrere VLANs laufen, wird Trunk genannt \cite{cisco14rout}. 
 
 \begin{figure}[h]
 \centering
@@ -32,17 +32,17 @@ Das in Abbildung \ref{vlanpak} gezeigte \emph{tagged} VLAN ermöglicht es, dass 
 
 Die Zugehörigkeit der Pakete zu einem VLAN wird über einen VLAN-Tag nach dem Standard  IEEE 802.1Q am Ehternet-Frame gekennzeichnet.\\
 
-Es wird zwischen statischen und dynamischen VLAN Implementierungen unterschieden. Beim statischen VLAN werden Ports fest einem VLAN zugeordnet. Dynamisches VLAN ordnet das VLAN anhand von MAC- oder IP-Adressen zu, wird das Gerät an einen anderen Port angeschlossen ändert sich entsprechend das VLAN des Ports. Dynamisches VLAN ist zwar für den Administrator sehr angenehm, da ihm Arbeit abgenommen wird, aufgrund der leichten Fälschbarkeit von MAC- und IP-Adressen wird vom BSI von der Nutzung von Dynamischen VLANs abgeraten \cite{bsiLogSeg}
+Es wird zwischen statischen und dynamischen VLAN-Implementierungen unterschieden. Beim statischen VLAN werden Ports fest einem VLAN zugeordnet. Dynamisches VLAN ordnet das VLAN anhand von MAC- oder IP-Adressen zu. Wird das Gerät an einen anderen Port angeschlossen ändert sich entsprechend das VLAN des Ports. Dynamisches VLAN ist zwar für den Administrator sehr angenehm, da ihm Arbeit abgenommen wird, aufgrund der leichten Fälschbarkeit von MAC- und IP-Adressen wird vom BSI von der Nutzung von Dynamischen VLANs abgeraten \cite{bsiLogSeg}.
 \\
 
-Bei der Auslieferung sind in einem Switch alle Ports demselben \emph{default} VLAN zugeordnet. Wenn der Switch in Betrieb genommen wird sollten einige, im Folgenden erläuterte,  Punkte beachtet werden. Alle Ports die nicht verwendet werden sollten ein eigenes VLAN bekommen, das ins leere läuft. Bei der Verwendung von Trunks zwischen Switches gibt es ein \emph{native} VLAN über das Pakete gesendet werden, die keinen Tag haben. Solche Pakete können von Switches stammen, die kein Protokoll mit tagging unterstützen. Dieses native VLAN sollte ein eigenes VLAN sein, um hier keine Angriffspunkte zu bieten. Außerdem sollte ein gesondertes \emph{management} VLAN erstellt werden über das Zugriff auf die Konfiguration des  Switches besteht. 
+Bei der Auslieferung sind in einem Switch alle Ports demselben \emph{default} VLAN zugeordnet. Wenn der Switch in Betrieb genommen wird sollten einige, im Folgenden erläuterte  Punkte beachtet werden. Alle Ports die nicht verwendet werden, sollten ein eigenes VLAN bekommen, das ins Leere läuft. Bei der Verwendung von Trunks zwischen Switches gibt es ein \emph{native} VLAN, über das Pakete gesendet werden, die keinen Tag haben. Solche Pakete können von Switches stammen, die kein Protokoll mit tagging unterstützen. Dieses native VLAN sollte ein eigenes VLAN sein, um hier keine Angriffspunkte zu bieten. Außerdem sollte ein gesondertes \emph{management} VLAN erstellt werden, über das Zugriff auf die Konfiguration des  Switches besteht. 
 
 
 
 
 \section{VLAN und Sicherheit}
 
-\glqq Entgegen den Aussagen einiger Hersteller muss berücksichtigt werden, dass VLANs nicht entwickelt wurden, um Sicherheitsanforderungen bei der Trennung von Netzen zu erfüllen.\grqq (Bundesamt für Siherheit in der Informationstechnik: \cite{bsiswitch}).\\
+\glqq Entgegen den Aussagen einiger Hersteller muss berücksichtigt werden, dass VLANs nicht entwickelt wurden, um Sicherheitsanforderungen bei der Trennung von Netzen zu erfüllen.\grqq (Bundesamt für Sicherheit in der Informationstechnik: \cite{bsiswitch}).\\
 
 Trotzdem bringen VLANs gerade für kleinere Unternehmen einige Vorteile in der Datensicherheit, da sie, richtig konfiguriert, zumindest eine zusätzliche Hürde für Angreifer darstellen. 
 
@@ -51,30 +51,30 @@ Zunächst sollen mögliche Angriffe auf virtuelle LANs vorgestellt werden.
  \paragraph{VLAN Hopping}
   \begin{addmargin}[1cm]{0,5cm} 
 
-  {Bein VLAN Hopping befindet sich ein Angreifer in einem VLAN und versucht in ein anderes VLAN zu gelangen\cite{alabady2008design}. 
-  Eine Möglichkeit hierzu ist das \emph{double tagging}. Befindet sich der Angreifer in dem Vlan das als natives VLAN konfiguriert wurde kann er ein Ethernet Frame mit zwei Tags abschicken, den des nativen VLANs und einem weiteren des Ziel VLANs. Das Switch entfernt dann den ersten Tag und leitet den Frame weiter, ohne ein neues Tag hinzuzufügen, da die bei dem nativen VLAN nicht benötigt wird. Gelangt das Paket nun über einen Trunk zu einem weiteren Switch sieht dieser nur den zweiten Tag und leitet den Frame an das Opfer-VLAN weiter.
-  Um diese Art des Angriffs zu Verhindern sollten keine Geräte an das native VLAN angeschlossen werden \cite{cisco14rout}.\\
+  {Beim VLAN Hopping befindet sich ein Angreifer in einem VLAN und versucht in ein anderes VLAN zu gelangen \cite{alabady2008design}. 
+  Eine Möglichkeit hierzu ist das \emph{double tagging}. Befindet sich der Angreifer in dem VLAN das als natives VLAN konfiguriert wurde, kann er ein Ethernet Frame mit zwei Tags abschicken, den des nativen VLANs und einem weiteren des Ziel VLANs. Das Switch entfernt dann den ersten Tag und leitet den Frame weiter, ohne ein neues Tag hinzuzufügen, da die bei dem nativen VLAN nicht benötigt wird. Gelangt das Paket nun über einen Trunk zu einem weiteren Switch, sieht dieser nur den zweiten Tag und leitet den Frame an das Opfer-VLAN weiter.
+  Um diese Art des Angriffs zu verhindern, sollten keine Geräte an das native VLAN angeschlossen werden \cite{cisco14rout}.\\
   
  
   
- Eine weitere Form des VLAN Hoppings ist das \emph{switch spoofing}, welches ausnutzt, dass einige Switches automatisch erkennen, wenn ein anderer Switch versucht eine Trunk Verbindung aufzubauen und diese erwidern. Ein Angreifer kann vorgeben ein anderes Switch zu sein und somit erreichen, dass ein switch mit ihm eine Trunk-Verbindung eingeht, so bekommt der Angreifer die Kommunikation aller VLAN gesendet. 
+ Eine weitere Form des VLAN Hoppings ist das \emph{Switch Spoofing}, welches ausnutzt, dass einige Switches automatisch erkennen, wenn ein anderer Switch versucht eine Trunk Verbindung aufzubauen und diese erwidern. Ein Angreifer kann vorgeben, ein anderes Switch zu sein und somit erreichen, dass ein Switch mit ihm eine Trunk-Verbindung eingeht, so bekommt der Angreifer die Kommunikation aller VLANs gesendet. 
  
- Die Funktion des Automatischen Trunkings sollte für alle nicht-Trunk-Ports ausgeschaltet werden um switch spoofing zu verhindern \cite{cisco14rout}. }
+ Die Funktion des automatischen Trunkings sollte für alle nicht-Trunk-Ports ausgeschaltet werden, um Switch Spoofing zu verhindern \cite{cisco14rout}. }
  
   \end{addmargin}
    
  
  \paragraph{MAC-Flooding}
  \begin{addmargin}[1cm]{1cm}
- In einem Switch gibt es eine Tabelle, die festhält an welchen Port ein Paket für eine MAC-Adresse gesendet werden soll. Da diese Tabelle nur begrenten Speicherplatz hat, kann ein Angreifer versuchen sie mit falschen MAC-Adressen zu füllen. Ist der Speicher belegt wird der Switch alle Pakete an alle Ports des VLANs senden und der Angreifer kann die gesamte Kommunikation mitschneiden\cite{mehdizadeha2017virtual}.
-Eine Gegenmaßnahme ist es die MAC Adressen Manuell in die Tabelle einzutragen \cite{akram2017future}, also eine automatische Aktualisierung der Tabelle zu unterbinden. \\
+ In einem Switch gibt es eine Tabelle, die festhält, an welchen Port ein Paket für eine MAC-Adresse gesendet werden soll. Da diese Tabelle nur begrenzten Speicherplatz hat, kann ein Angreifer versuchen sie mit falschen MAC-Adressen zu füllen. Ist der Speicher belegt, wird der Switch alle Pakete an alle Ports des VLANs senden und der Angreifer kann die gesamte Kommunikation mitschneiden \cite{mehdizadeha2017virtual}.
+Eine Gegenmaßnahme ist es, die MAC-Adressen manuell in die Tabelle einzutragen \cite{akram2017future}, also eine automatische Aktualisierung der Tabelle zu unterbinden. \\
  
  	
  \end{addmargin}
 
 
 Das BSI gibt folgende Empfehlungen zur sicheren Nutzung von VLANs \cite{bsiLogSeg}: 
-Bereiche mit sehr hohem Schutzbedarf sollten nicht nur durch VLAN sondern physisch von anderen Bereichen des Netzwerkes getrennt werden. Innerhalb eines VLANs sollten nur Arbeitsgruppen mit gleich hohem Schutzbedarf sein. Ein VLAN sollte sich nicht über verschiedene Zonen der Grundarchitektur (vgl. Kapitel \ref{K1} ) erstrecken. Sensible Daten sollten verschlüsselt übertragen werden.\\
+Bereiche mit sehr hohem Schutzbedarf sollten nicht nur durch VLAN, sondern physisch von anderen Bereichen des Netzwerkes getrennt werden. Innerhalb eines VLANs sollten nur Arbeitsgruppen mit gleich hohem Schutzbedarf sein. Ein VLAN sollte sich nicht über verschiedene Zonen der Grundarchitektur (vgl. Kapitel \ref{K1} ) erstrecken. Sensible Daten sollten verschlüsselt übertragen werden.\\
 VLANs eignen sich zur Trennung von Netzen mit unterschiedlichem Schutzbedarf im Internen Netz.
 
 
